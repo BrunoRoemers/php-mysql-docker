@@ -1,0 +1,38 @@
+services:
+  php:
+    build:
+      context: ./
+      # NOTE: dockerfile is located relative to build context
+      dockerfile: ./docker/php/Dockerfile
+    restart: always
+    ports:
+      - ${PHP_PORT}:${PHP_PORT}
+    volumes:
+      - php_volume:${PHP_VOLUME}
+    depends_on:
+      - mysql
+    environment:
+      PHP_PORT: ${PHP_PORT}
+      # NOTE: should point to the mysql service
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  mysql:
+    # NOTE: make the mysql image work on apple silicon (via rosetta?)
+    platform: 'linux/x86_64'
+    build:
+      context: ./
+      # NOTE: dockerfile is located relative to build context
+      dockerfile: ./docker/mysql/Dockerfile
+    restart: always
+    volumes:
+      - mysql_volume:${MYSQL_VOLUME}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+volumes:
+  php_volume:
+  mysql_volume:

@@ -1,0 +1,5 @@
+.env
+siteroot/*
+!siteroot/.gitkeep
+sqldumps/*
+!sqldumps/.gitkeep
