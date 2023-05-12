@@ -6,6 +6,7 @@ services:
       dockerfile: ./docker/php/Dockerfile
     restart: always
     ports:
+      - ${SSH_PORT}:2222
       - ${PHP_PORT}:${PHP_PORT}
     volumes:
       - php_volume:${PHP_VOLUME}

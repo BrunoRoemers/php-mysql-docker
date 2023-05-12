@@ -3,4 +3,5 @@ siteroot/*
 !siteroot/.gitkeep
 sqldumps/*
 !sqldumps/.gitkeep
+docker/php/ssh/authorized_keys
 TODO.md
