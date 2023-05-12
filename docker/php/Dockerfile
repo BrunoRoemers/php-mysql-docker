@@ -8,7 +8,7 @@ RUN apt-get install -y zip libzip-dev
 # install php extensions
 RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install zip
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN pecl install xdebug-2.8.1 && docker-php-ext-enable xdebug
 
 # install composer
 # NOTE: the commit hash can be updated to update the installer

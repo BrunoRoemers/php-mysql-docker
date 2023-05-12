@@ -10,6 +10,7 @@ TODO
   - `docker compose up`
   - `docker compose up --build`
   - `docker compose down`
+  - `docker compose down --volumes` (shuts down containers and removes volumes)
   - `docker volume ls`
   - `docker compose rm -v`
   - `docker volume prune` (clean up unused volumes after containers have been removed)
