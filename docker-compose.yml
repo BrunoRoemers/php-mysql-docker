@@ -8,12 +8,14 @@ services:
     ports:
       - ${SSH_PORT}:2222
       - ${PHP_PORT}:${PHP_PORT}
+      - ${PHP_SECURE_PORT}:${PHP_SECURE_PORT}
     volumes:
       - php_volume:${PHP_VOLUME}
     depends_on:
       - mysql
     environment:
       PHP_PORT: ${PHP_PORT}
+      PHP_SECURE_PORT: ${PHP_SECURE_PORT}
       # NOTE: should point to the mysql service
       MYSQL_HOST: mysql
       MYSQL_DATABASE: ${MYSQL_DATABASE}

@@ -1,6 +1,9 @@
 # source: https://github.com/docker-library/php/blob/21967e6cd5f1240093d4f0b03d579397571cab9c/8.2/bullseye/apache/Dockerfile
 FROM php:8.2-apache
 
+# install snakeoil (self-signed) certificate
+RUN apt-get update && apt-get install -y ssl-cert
+
 # install dependencies of php extensions
 RUN apt-get update && apt-get install -y zip libzip-dev
 
@@ -36,12 +39,14 @@ COPY docker/php/php/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.i
 COPY docker/php/php/error_reporting.ini /usr/local/etc/php/conf.d/error_reporting.ini
 
 # configure apache
-RUN a2enmod rewrite
+RUN a2enmod rewrite ssl
 RUN a2disconf other-vhosts-access-log
 COPY ./docker/php/apache/apache2.conf /etc/apache2/apache2.conf
 COPY ./docker/php/apache/ports.conf /etc/apache2/ports.conf
 COPY ./docker/php/apache/sites-available/* /etc/apache2/sites-available/
-RUN a2ensite 000-default
+RUN a2dissite 000-default
+RUN a2ensite default-http
+RUN a2ensite default-https
 
 # add data
 COPY ./siteroot /var/www/html/
