@@ -18,13 +18,11 @@ RUN mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
 RUN apt-get update && apt-get install -y supervisor
 COPY docker/php/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# install ssh # TODO make this the same group as apache
+# install ssh
 RUN apt-get update && apt-get install -y openssh-server
-RUN groupadd sshgroup && useradd -ms /bin/bash -g sshgroup sshuser
-RUN mkdir -p /home/sshuser/.ssh
 COPY docker/php/ssh/sshd_config /etc/ssh/sshd_config
-COPY docker/php/ssh/authorized_keys /home/sshuser/.ssh/authorized_keys
-RUN chown sshuser:sshgroup /home/sshuser/.ssh/authorized_keys && chmod 600 /home/sshuser/.ssh/authorized_keys
+COPY docker/php/ssh/authorized_keys /root/.ssh/authorized_keys
+RUN chmod 600 /root/.ssh/authorized_keys
 RUN service ssh start
 
 # install mysql client (mariadb)
