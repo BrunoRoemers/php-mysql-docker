@@ -1,5 +1,4 @@
-# FROM php:8.1-apache
-FROM php:7.4-apache
+FROM php:8.2-apache
 
 # install dependencies of php extensions
 RUN apt-get update
@@ -8,11 +7,11 @@ RUN apt-get install -y zip libzip-dev
 # install php extensions
 RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install zip
-RUN pecl install xdebug-2.8.1 && docker-php-ext-enable xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 # install composer
 # NOTE: the commit hash can be updated to update the installer
-RUN curl -s https://raw.githubusercontent.com/composer/getcomposer.org/d366ce4e77501dd11a28baace02e702dd9f1c203/web/installer | php -- --install-dir=/bin --filename=composer
+RUN curl -s https://raw.githubusercontent.com/composer/getcomposer.org/1cf9cac9f0bed289429548be2858dbdfde448da6/web/installer | php -- --install-dir=/bin --filename=composer
 RUN mkdir /var/www/.composer && chown www-data:www-data /var/www/.composer
 
 # configure php
